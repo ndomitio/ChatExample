@@ -12,13 +12,12 @@ namespace ChatterExample
     using System;
     using System.Collections.Generic;
     
-    public partial class Chat
+    public partial class sysdiagram
     {
-        public int ChatID { get; set; }
-        public string UserID { get; set; }
-        public System.DateTime TimeStamp { get; set; }
-        public string Message { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
