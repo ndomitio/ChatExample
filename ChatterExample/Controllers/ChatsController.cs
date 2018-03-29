@@ -21,27 +21,35 @@ namespace ChatterExample.Controllers
             return View(chats.ToList());
         }
 
-        // GET: Chats/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult TestJson()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Chat chat = db.Chats.Find(id);
-            if (chat == null)
-            {
-                return HttpNotFound();
-            }
-            return View(chat);
-        }
+            string jsonTest = "{ \"firstName\": \"Bob\",\"lastName\": \"Sauce\", \"children\": [{\"firstName\": \"Barbie\", \"age\": 19 },{\"firstName\": \"Ron\", \"age\": null }] }";
 
-        // GET: Chats/Create
-        public ActionResult Create()
-        {
-            ViewBag.UserID = new SelectList(db.AspNetUsers, "Id", "Email");
-            return View();
-        }
+                return Json(jsonTest, JsonRequestBehavior.AllowGet);
+            }
+
+
+            // GET: Chats/Details/5
+            public ActionResult Details(int? id)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Chat chat = db.Chats.Find(id);
+                if (chat == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(chat);
+            }
+
+            // GET: Chats/Create
+            public ActionResult Create()
+            {
+                ViewBag.UserID = new SelectList(db.AspNetUsers, "Id", "Email");
+                return View();
+            }
 
         // POST: Chats/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

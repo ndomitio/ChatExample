@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<ChatterExample.Chat>
 
 @{
+    /**/
+
     ViewBag.Title = "Index";
 }
 
@@ -9,37 +11,37 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUser.Email)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeStamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ChatID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ChatID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ChatID })
-        </td>
-    </tr>
+<div id="response"></div>
+<button id="getChats" class="btn btn-primary" onclick="DisplayName()">Get Chats</button>
+
+@section Scripts {
+    <script>
+
+
+        //var jsonTest = { "firstName": "Bob", "lastName": "Sauce", "children": [{ "firstName": "Barbie", "age": 19 }, { "firstName": "Ron", "age": 45 }] }
+
+        ////now some jQuery
+        //$("#response").text(jsonTest.children[1].age);
+
+//AJAX request using jQuery as a helper
+   	//Notice this combines Razor syntax (@Url.Action()) in order to
+   	//have the compiler figure out the exact path of the controller,
+   	//alongside of jQuery.
+    	@*$.get("@Url.Action("TestJson","Chats")", function (response) {
+            alert(response);
+    	});*@
+
+        function DisplayName(x) {
+              $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
+var jsonTest = JSON.parse(serverResponse);
+        alert(jsonTest.firstName);
+        $("#response").text(jsonTest.firstName);
+
+});
+
+        }
+
+    </script>
 }
 
-</table>
