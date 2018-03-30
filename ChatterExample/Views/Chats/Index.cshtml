@@ -13,8 +13,7 @@
 </p>
 
 <div id="response"></div>
-<button id="getChats" class="btn btn-primary" onclick="DisplayName()">Get Chats</button>
-
+<p id="getChats"></p>
 @section Scripts {
     <script>
 
@@ -32,16 +31,31 @@
             alert(response);
     	});*@
 
-        function DisplayName(x) {
+        @*function DisplayName(x) {
               $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
 var jsonTest = JSON.parse(serverResponse);
         alert(jsonTest.firstName);
-        $("#response").text(jsonTest.firstName);
 
-});
+        $("#response").text(serverResponse);
 
+
+
+        }*@
+        $(document).ready(function(){
+            $("#getChats").click(
+                function () {
+                    $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
+                        var jsonTest = JSON.parse(serverResponse);
+                        console.log(jsonTest);
+
+                    })
+                }
+            );
+            $("#postChats").click(
+
+            );
         }
-
+        );
     </script>
 }
 

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ChatterExample;
+using Newtonsoft.Json;
 
 namespace ChatterExample.Controllers
 {
@@ -21,16 +22,39 @@ namespace ChatterExample.Controllers
             return View(chats.ToList());
         }
 
+
+
+
         public JsonResult TestJson()
         {
-            string jsonTest = "{ \"firstName\": \"Bob\",\"lastName\": \"Sauce\", \"children\": [{\"firstName\": \"Barbie\", \"age\": 19 },{\"firstName\": \"Ron\", \"age\": null }] }";
+            //string jsonTest = "{ \"firstName\": \"Bob\",\"lastName\": \"Sauce\", \"children\": [{\"firstName\": \"Barbie\", \"age\": 19 },{\"firstName\": \"Ron\", \"age\": null }] }";
 
-                return Json(jsonTest, JsonRequestBehavior.AllowGet);
-            }
+            //return Json(jsonTest, JsonRequestBehavior.AllowGet);
+
+            //SQL Statment HERE (mine is not shown since this is part of //your project grade).
+
+            //Now, the LINQ equivalent is declared as a variable (below).
+            var chats = from Chats in db.Chats
+                        select new
+                        {
+                            Chats.Message,
+                            Chats.AspNetUser.UserName
+                        };
+
+            //Next we serialize our data in the model to JSON(Newtonsoft //library at work). 
+            //FYI: the query isn’t run until you call the ToList() method.
+
+            var output = JsonConvert.SerializeObject(chats.ToList());
+
+            //Finally, we return Json to the view
+            return Json(output, JsonRequestBehavior.AllowGet);
 
 
-            // GET: Chats/Details/5
-            public ActionResult Details(int? id)
+        }
+
+
+        // GET: Chats/Details/5
+        public ActionResult Details(int? id)
             {
                 if (id == null)
                 {
